@@ -1,0 +1,18 @@
+#box{
+	
+	margin-right:1.5%;
+	margin-top:15px;
+	margin-left:1.5%;
+	padding: 10px; 
+	width: 95%; 
+	height: 88%; 
+	background-color: #ffffff;
+}
+#box1{
+    display:flex; 
+    justify-content:space-around;    	
+    }
+#box2{
+    display:flex; 
+    justify-content:stretch;    	
+    }      

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/layui/css/layui.css">
+</head>
+<body>
+<ul class="layer_notice">
+    <li><a href="http://fly.layui.com/jie/5366/" target="_blank">1. layer 系列常见问题的处理和相关实用干货集锦</a></li>
+    <li><a href="https://github.com/sentsin/layer/blob/master/CHANGELOG.md" target="_blank">2. layer 所有版本完整更新日志</a></li>
+    <li><a href="http://fly.layui.com/jie/2461.html" target="_blank">3. 关注 layui 微信公众号，随时随地获取最新动态</a></li>
+</ul>
+<div id="tong"></div>
+
+<!-- 你的HTML代码 -->
+
+<script src="css/layui/layui.js"></script>
+<script>
+    //一般直接写在一个js文件中
+    layui.use('layer',function (){
+        var layer =layui.layer;
+
+
+        layer.open({
+            type: 2,
+            title: '很多时候，我们想最大化看，比如像这个页面。',
+            shadeClose: true,
+            shade: false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['893px', '600px'],
+            content: 'http://fly.layui.com/'
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" charset="UTF-8" />
+    <title>云都海鹰无人机植保监管平台</title>
+    <link rel="stylesheet" href="css/layui/css/layui.css">
+    <link rel="stylesheet" href="css/diy/index.css">
+    <script src="js/external/jquery-2.0.0.min.js"></script>
+    <!--    layui样式包 -->
+    <!-- <script src="http://c.cnzz.com/core.php"></script> -->
+    <script src="js/external/vue.min.js"></script>
+    <!--vue -->
+    <script src="js/echarts_package/dist/echarts.min.js"></script>
+    <script src="js/function.js"></script>
+    
+   
+</head>
+
+<body class="layui-layout-body">
+   <table class="layui-hide" id="planList" lay-filter="planList"></table>
+    <script src="css/layui/layui.zy.js" charset="utf-8"></script>
+<script>
+function RequestParameter(){
+	var url = window.location.search; //获取url中"?"符后的字串
+	console.log(url);
+	var theRequest = new Object();
+	if (url.indexOf("?") != -1) {
+	    var str = url.substr(1);
+	    var strs = str.split("&");
+	    console.log(strs);
+	    //var code2 = str.split("=")[1]
+	    for(var i = 0; i < strs.length; i ++) {
+	        theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+	    }
+	}
+	console.log(theRequest);
+	return theRequest;
+}
+var getGrade=RequestParameter()["%20jiaci"];
+console.log(getGrade);
+let codea=$.ajax({url:'http://ydhy.xyz:8687/zbpth/zbpt/flydata'
+    	,type:'post'
+        ,data:{"jia_ci":getGrade}
+        ,dataType:"json"
+        ,async:false
+        });
+
+console.log(codea); 
+var code1= JSON.parse(codea.responseText).data; 
+/* console.log(code1); */
+var planid = code1[0].plan_id;
+var planer = code1[0].planer_id;
+var strtime =code1[0].start_time;
+/* console.log(code1[0].plan_id); */
+// function showTime(tempDate)
+// {
+//       var d = new Date(tempDate); 
+//       var year = d.getFullYear();
+//       var month = d.getMonth();
+//       month++;
+//       var day = d.getDate();
+//       var hours = d.getHours();
+      
+//       var minutes = d.getMinutes();
+//       var seconds = d.getSeconds();
+//       month = month<10 ? "0"+month:month;
+//       day = day<10 ? "0"+day:day;
+//       hours = hours<10 ? "0"+hours:hours;
+//       minutes = minutes<10 ? "0"+minutes:minutes;
+//       seconds = seconds<10 ? "0"+seconds:seconds;
+      
+      
+//       var time = year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+//       return time;
+// }
+layui.use('table', function(){
+
+  var table = layui.table;
+  table.render({
+     elem: '#planList'
+     ,height: 968
+     ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+    ,page: true
+    ,id : 'table1'
+    ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+      //title: '提示'
+      layEvent: 'LAYTABLE_TIPS'
+      ,icon: 'layui-icon-tips'
+    }] 
+    ,cols: [[
+       {type: 'checkbox', fixed: 'left',hide:true}
+      /* ,{field:'id', title:'序号', fixed: 'left', sort: true} */
+      ,{field:'plan_id', title:'飞机编号',sort: true}
+      ,{field:'planer_id', title:'飞手编号'}
+      ,{field:'plan_time', title:'飞行时长',sort: true}
+      ,{field:'plan_speed', title:'喷洒流速'}
+      ,{field:'work_area', title:'作业面积'}
+      ,{field:'mu_set', title:'亩设定值'}
+      ,{field:'mu_ac', title:'亩设实际值'}
+      ,{field:'pen_status', title:'喷洒开关'}
+      ,{field:'jin_du', title:'经度'}
+      ,{field:'wei_du', title:'纬度'}
+      ,{field:'height_du', title:'高度'}
+      ,{field:'sh_speed', title:'水平速度'}
+      ,{field:'level_sta', title:'液位状态'}
+      ,{field:'plane_mode', title:'飞行模式'}
+      ,{field:'start_time', title:'起飞时间'}
+      ,{field:'planer_name', title:'飞手姓名'}
+      ,{field:'team_id', title:'团队编号'}
+      ,{field:'jia_ci', title:'架次号'}
+      ,{field:'sh_time',title:'当前时间',sort: true}
+      
+    ]],
+     
+    data: JSON.parse(codea.responseText).data
+  });
+ 
+});
+
+</script>
+      
+
+
+   
+   
+    
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="css/layui/css/layui.css"/>
+    <script src="js/external/jquery-2.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="css/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/function.js"></script>
+    <title>云都海鹰无人机植保监管平台</title> 
+    
+    <!-- 
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: "微软雅黑";
+        }
+        body{
+            background-color: rgba(0,0,0,0.5);
+        }
+        #wai{
+            width:50%;
+            line-height: 70px;
+        }
+        
+        .spp{
+            margin-left: 39px;
+        }
+        h1{
+            text-align: center;
+        }
+        p{
+            margin-left: -13%;
+            font-size: 18px;
+        }
+        input{
+            width: 200px;
+            height:30px;
+            border-radius: 5px;
+            border-color: lawngreen;    
+        }
+        .p1{
+            margin-left: -7%;
+            margin-left: 13px;
+        }
+        
+        #sel{
+            width: 200px;
+            border-radius: 5px;
+            border-color: lawngreen;
+            margin-left: 5px;
+        }
+        #spp1{            
+            display: none;
+            color: red;    
+            
+        }
+        #spp2{
+            display: none;
+            color: red;
+            
+        }
+        #spp3{
+            display: none;
+            color: red;
+            
+        }
+        #spp4{
+            display: none;
+            color: red;
+            
+        }
+        
+    </style>    
+     -->
+</head>
+<body>
+	<!-- 
+    <div id="zong">
+        <h1>添加团队管理</h1>
+        <div id="wai">
+            <span class="spp">团队编号：</span>
+            <input type="text"  id="zh" value="" placeholder="请输入中英文字母"/><span id="spp1">请重新输入</span><br />    
+            <span class="spp">飞手名称：</span>
+            <input type="text"  id="xm" value="" placeholder="请输入中文字符"/><span id="spp2">请重新输入</span><br />
+            <span class="spp">飞机编号：</span>
+            <input type="text"  id="mm" value=""  placeholder="请输入中文字符"/><span id="spp3">请重新输入</span><br />
+            <span class="spp">注册时间：</span>
+            <input type="datetime" id="tm" value="" placeholder="yyyy-MM-dd hh:mm:ss"/> <span id="spp4">请重新输入</span>      
+        </div>
+    </div>
+     -->
+     <div id="add-team" >
+       <form class="layui-form" id="add-form" action="">
+         <div class="layui-form-item center" >
+          <label class="layui-form-label" style="width: 100px" >用户名:</label>
+          <div class="layui-input-block">
+           <input type="text" name="name" required value="" style="width: 240px" lay-verify="required" placeholder="请输入团队名称" autocomplete="off" class="layui-input" id="ma">
+          </div>
+         </div>
+         
+         <div class="layui-form-item">
+          <label class="layui-form-label" style="width: 100px">密码:</label>
+          <div class="layui-input-block">
+           <input type="text" name="value" required value="" style="width: 240px" lay-verify="required" placeholder="请输入飞手名称" autocomplete="off" class="layui-input" id="mb">
+          </div>
+         </div>
+         <div class="layui-form-item">
+          <label class="layui-form-label" style="width: 100px">状态:</label>
+          <div class="layui-input-block">
+           <input type="text" name="value" required value="" style="width: 240px" lay-verify="required" placeholder="请输入飞手姓名" autocomplete="off" class="layui-input" id="mc">
+          </div>
+         </div>
+         
+         </div>
+<!--          <div class="layui-form-item"> -->
+<!--           <label class="layui-form-label" style="width: 100px">注册时间：</label> -->
+<!--           <div class="layui-input-block"> -->
+<!--            <input type="datetime-local" name="value" required value="" style="width: 240px" lay-verify="required" placeholder="YYYY-MM-DD hh:mm:ss" autocomplete="off" class="layui-input" id="em"> -->
+<!--            <input type="hidden" name="id" style="width: 240px" autocomplete="off" class="layui-input"> -->
+<!--           </div> -->
+         </div>
+         <div class="layui-form-item">
+          <div class="layui-input-block">
+           <button class="layui-btn" lay-submit lay-filter="save" id="addsub" >立即提交</button>
+           <button type="reset" class="layui-btn layui-btn-primary" id="closeBtn" >重置</button>
+          </div>
+         </div> 
+       </form>  
+    </div>
+    <script type="text/javascript">
+    $("#addsub").click(function(){
+		//var list = [];
+		//var data = {};
+		//new Date("yyyy-mm-dd hh:mm:ss");
+		 var admin=$("#ma").val();
+		 var user=$("#mb").val();
+		 var state=$("#mc").val();
+		//var ZUCE=$("#em").val();
+		
+		//console.log(TEAM);
+		if(admin!==''&&user!==''&&state!==''){
+		$.ajax({
+			url:"http://ydhy.xyz:8687/zbpth/zbpt/AddUsername",
+			async:false,
+			method:"post",
+			data:"user_admin="+admin+"&user_pwd="+user+"&user_state="+state,
+			success: function(meg){
+							if(meg){alert("保存成功");
+							window.location.reload();
+						}else{
+							alert("保存失败");
+							return;
+						}
+			}
+		            });
+		}else{
+			alert("输入框不能为空值");
+		}
+		window.parent.layer.closeAll();//关闭弹窗        
+		})
+		
+    </script>
+</body>
+</html>
